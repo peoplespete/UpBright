@@ -1,6 +1,7 @@
 package com.petedunlap.upbright;
 
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager mSensorManager;
     private Sensor mRotation;
     private float initialBrightness;
-
+    private Intent mServiceIntent;
     @BindView(R.id.background) RelativeLayout mBackground;
     @BindView(R.id.xValue) TextView mXValue;
     @BindView(R.id.yValue) TextView mYValue;
@@ -32,6 +33,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         ButterKnife.bind(this);
 
         initialBrightness = getWindow().getAttributes().screenBrightness;
+
+        mServiceIntent = new Intent(this, BrightnessService.class);
+        this.startService(mServiceIntent);
+
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mRotation = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
     }
@@ -49,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         float y = event.values[1];
         float z = event.values[2];
         updateDisplay(x, y, z);
-//        Toast.makeText(this, (lux + ""), Toast.LENGTH_LONG).show();
     }
 
     @Override
