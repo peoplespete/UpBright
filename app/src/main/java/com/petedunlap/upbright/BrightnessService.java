@@ -30,6 +30,8 @@ public class BrightnessService extends IntentService {
 
         String dataString = workIntent.getDataString();
 
+//        was trying this:
+//        https://github.com/EatHeat/FloatingExample/blob/master/AndroidManifest.xml
 //        windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
 //        emptyView = new ImageView(this);
 //        emptyView.setImageResource(R.drawable.floating);
