@@ -1,13 +1,13 @@
 package com.petedunlap.upbright;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private SensorManager mSensorManager;
     private Sensor mRotation;
+    private float initialBrightness;
 
     @BindView(R.id.background) RelativeLayout mBackground;
     @BindView(R.id.xValue) TextView mXValue;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        initialBrightness = getWindow().getAttributes().screenBrightness;
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mRotation = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
     }
@@ -68,12 +70,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mYValue.setText(y + "");
         mZValue.setText(z + "");
 
+        WindowManager.LayoutParams layout = getWindow().getAttributes();
 //        if (Math.abs(x) > 8 || Math.abs(y) > 8) {
         if (Math.abs(z) < 5) {
-            mBackground.setBackgroundColor(Color.GREEN);
+            layout.screenBrightness = initialBrightness;
         } else {
-            mBackground.setBackgroundColor(Color.BLACK);
+            layout.screenBrightness = 0;
         }
+
+        getWindow().setAttributes(layout);
 
 
 
