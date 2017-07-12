@@ -8,6 +8,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,17 +29,21 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.v("HHHHH", "MAINACTIVITY started");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
         initialBrightness = getWindow().getAttributes().screenBrightness;
 
-        mServiceIntent = new Intent(this, BrightnessService.class);
-        this.startService(mServiceIntent);
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mRotation = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
+//
+//        mServiceIntent = new Intent(this, BrightnessService.class);
+//        this.startService(mServiceIntent);
+//        finish();
     }
 
     @Override
